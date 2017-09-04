@@ -29,6 +29,20 @@
           <h1 class="title">商品信息</h1>
           <p class="text">{{food.info}}</p>
         </div>
+        <split></split>
+        <div class="rating">
+          <h1 class="title">商品评价</h1>
+          <ratingselect
+          @select="select"
+          @toggle-content= "toggleContent"
+          :ratings="food.ratings"
+          :select-type="selectType"
+          :only-content="onlyContent"
+          :desc="desc" >
+
+          </ratingselect>
+        </div>
+
       </div>
     </div>
   </transition>
@@ -37,10 +51,16 @@
 
 <script type="ecmascript-6">
 
+  const POSITIVE = 0;
+  const NAGETIVE = 1;
+  const ALL = 2;
+
   import BScroll from 'better-scroll'
   import cartcontrol from '../cartcontrol/cartcontrol.vue'
   import Vue from 'vue'
   import split from '../split/split.vue'
+  import ratingselect from '../ratingselect/ratingselect.vue'
+
 
   export default {
     props:{
@@ -50,11 +70,25 @@
     },
     data() {
       return {
-        showFlag:false
+        showFlag:false,
+        selectType:ALL,
+        onlyContent:true,
+        desc:{
+          all:'全部',
+          positive:'推荐',
+          nagetive:'吐槽'
+        }
       }
     },
     methods:{
       show() {
+        this.selectType = ALL;
+        this.onlyContent = true;
+        this.desc = {
+          all:'全部',
+          positive:'推荐',
+          nagetive:'吐槽'
+        };
         this.showFlag = true;
         this.$nextTick(() => {
           if(!this.scroll){
@@ -76,11 +110,18 @@
       },
       addCart(target) {
         this.$emit('add-first',target);
+      },
+      select(type) {
+        this.selectType = type;
+      },
+      toggleContent() {
+        this.onlyContent = !this.onlyContent;
       }
     },
     components:{
       cartcontrol,
-      split
+      split,
+      ratingselect
     }
   }
 </script>
@@ -178,6 +219,14 @@
         padding:0 8px
         font-size:12px
         color:rgb(77,85,93)
+    .rating
+      padding-top:18px
+      .title
+        line-height:14px
+        margin-left:18px
+        font-size:14px
+        color:rgb(7,17,27)
+
 
 
 
