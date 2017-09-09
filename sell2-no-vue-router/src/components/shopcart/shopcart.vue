@@ -169,7 +169,9 @@
               this.scroll = new BScroll(this.$refs.listContent,{click:true});
             })
           }else{
-            this.scroll.refresh();
+            this.$nextTick(() =>{
+                this.scroll.refresh();
+            })
           }
 
         }

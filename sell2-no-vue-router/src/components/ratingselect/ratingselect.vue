@@ -46,15 +46,9 @@
      },
      methods:{
        select(type,event) {
-         if(!event._constructed){
-           return ;
-         }
          this.$emit('select',type);
        },
        toggleContent(event) {
-         if(!event._constructed){
-           return ;
-         }
          this.$emit('toggle-content')
        }
      },
@@ -122,6 +116,7 @@
           display:inline-block
           vertical-align:top
           font-size:12px
+
 
 
 
