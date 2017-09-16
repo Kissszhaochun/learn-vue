@@ -119,7 +119,6 @@
         if(response.errno === 0){
           this.ratings = response.data;
         }
-        console.log('ratings',this.ratings);
         this.$nextTick(() =>{
           if(!this.scroll){
             this.scroll = new BScroll(this.$refs.content,{click:true});

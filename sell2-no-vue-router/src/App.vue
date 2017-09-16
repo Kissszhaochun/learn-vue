@@ -14,25 +14,31 @@
           <router-link to='/seller'>商家</router-link>
         </div>
     </div>
-    <router-view :seller="seller"></router-view>
-
+    <keep-alive>
+      <router-view :seller="seller"></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
 import header from './components/header/header.vue'
-
+import {urlParse} from './common/js/util.js'
 
 export default {
   name: 'app',
   data:function(){
-    return {seller:{}}
+    return {seller:{
+      id:(() =>{
+        let param = urlParse();
+        return param.id;
+      })()
+    }}
   },
   created:function(){
     this.$http.get('/api/seller').then(response => {
       response = response.body;
       if(response.errno===0){
-        this.seller = response.data;
+        this.seller = Object.assign({},this.seller,response.data);
       }
     });
   },
